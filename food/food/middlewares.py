@@ -4,6 +4,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+import random
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
@@ -71,6 +72,18 @@ class FoodDownloaderMiddleware:
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
         # middleware.
+
+        # 使用代理池
+        plist = [
+            "http://121.232.148.33:9000",
+            "http://152.136.62.181:9999",
+            "http://47.92.234.75:80",
+            "http://121.232.148.221:9000",
+            "http://101.34.214.152:8001",
+            "http://202.55.5.209:8090",
+            "http://47.75.90.57:80",
+        ]
+        request.meta["proxy"] = random.choice(plist)
 
         # Must either:
         # - return None: continue processing this request

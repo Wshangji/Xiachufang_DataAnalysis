@@ -5,9 +5,6 @@ from scrapy import Selector
 class CategorySpider(scrapy.Spider):
     name = 'category'
     allowed_domains = ['www.xiachufang.com']
-    custom_settings = {
-        "USER_AGENT": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-    }
     start_urls = ['http://www.xiachufang.com/category/']
 
     def parse(self, response):
