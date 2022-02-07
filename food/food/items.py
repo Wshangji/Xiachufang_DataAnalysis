@@ -13,3 +13,14 @@ class FoodItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+# 菜单数据
+class CategoryItem(scrapy.Item):
+    # 一级菜单分类
+    category_father = scrapy.Field()
+    # 二级菜单分类
+    item_name = scrapy.Field()
+    # url地址
+    item_url = scrapy.Field()
+    pass
