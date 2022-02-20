@@ -12,7 +12,7 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # 读取csv至字典
-    csvFile = open("./food/category.csv", "r")
+    csvFile = open("food/food/category.csv", "r")
     reader = csv.reader(csvFile)
 
     for item in reader:

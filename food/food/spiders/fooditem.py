@@ -39,13 +39,12 @@ class FooditemSpider(scrapy.Spider):
     def parse_recipes(self, recipes):
         for recipe in recipes:
             sel = Selector(text=recipe)
-            name = sel.xpath("//p[@class='name']/a/text()").extract_first().strip()
-            url = sel.xpath("//a[1]/@href").extract_first()
+            food_item = FoodItem()
+            food_item['name'] = sel.xpath("//p[@class='name']/a/text()").extract_first().strip()
+            food_item['url'] = sel.xpath("//a[1]/@href").extract_first()
             # item_id = recipe.compile("/recipe/(.*?)/").findall(url)[0]
-            score = sel.xpath("//p[@class='stats']/span/text()").extract_first().strip()
-            print("name:" + name)
-            print("url:" + self.base_url + url)
-            print("score:" + score)
+            food_item['score'] = sel.xpath("//p[@class='stats']/span/text()").extract_first().strip()
+            yield food_item
 
     def error_parse(self, faiture):
         request = faiture.request

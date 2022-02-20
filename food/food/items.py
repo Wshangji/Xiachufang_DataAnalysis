@@ -10,8 +10,12 @@ import scrapy
 
 
 class FoodItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    # 菜品名称
+    name = scrapy.Field()
+    # url地址
+    url = scrapy.Field()
+    # 网站评分
+    score = scrapy.Field()
     pass
 
 
