@@ -6,7 +6,7 @@ import csv
 class CommentsSpider(scrapy.Spider):
     name = 'comments'
     allowed_domains = ['www.xiachufang.com']
-
+    base_url = "https://www.xiachufang.com"
 
     def start_requests(self):
         # 读取csv文件
@@ -23,18 +23,29 @@ class CommentsSpider(scrapy.Spider):
             )
 
 
+
     def parse_all(self, response):
         if response.status == 200:
-            # 执行js脚本,将下拉条拉到最下面
-            self.browser.execute_script(
-                'window.scrollTo(0,document.body.scrollHeight)'
-            )
+            nextPage = response.xpath("//a[@class='next']/@href").get()
+            if nextPage:
+                print(nextPage)
+                yield scrapy.Request(
+                    url = self.base_url + nextPage,
+                    callback = self.parse_all,
+                    errback = self.error_parse,
+                )
             # 获取菜品名字
             title = response.xpath('//h1/a/span/text()').get()
             # print(title)
             # 爬取评论
-            commentss = response.xpath('//p[@class="desc"]/text()')
-            print(commentss)
+            comments = response.xpath('//p[@class="desc"]/text()')
+            for item in comments:
+                comments_item = item.get().strip()
+                if comments_item == "  分享图片":
+                    pass
+                print("————评论————：",comments_item)
+
+
 
 
     def error_parse(self, faiture):

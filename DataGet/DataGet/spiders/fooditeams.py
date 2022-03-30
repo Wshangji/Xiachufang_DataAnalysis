@@ -27,10 +27,10 @@ class FooditeamsSpider(scrapy.Spider):
     def parse_all(self, response):
         if response.status == 200:
             recipes = response.xpath("//div[@class='normal-recipe-list']/ul/li").extract()
-            # self.parse_recipes(recipes)
             nextPage = response.xpath("//div[@class='pager']/a[@class='next']/@href").extract_first()
             # print(recipes)
             if nextPage:
+                print(nextPage)
                 yield scrapy.Request(
                     url = self.base_url + nextPage,
                     callback = self.parse_all,
