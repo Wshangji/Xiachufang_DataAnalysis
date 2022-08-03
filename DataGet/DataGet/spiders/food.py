@@ -11,7 +11,7 @@ class FoodSpider(scrapy.Spider):
 
     def start_requests(self):
         # 读取csv文件
-        csvfile = open("fooditeams.csv", "r", encoding='utf-8')
+        csvfile = open("D:\PROJECT\Xiachufang_DataAnalysis\DataGet/fooditeams.csv", "r", encoding='utf-8')
         reader = csv.reader(csvfile)
         for item in reader:
             # 忽略第一行

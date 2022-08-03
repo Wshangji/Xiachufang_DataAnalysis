@@ -11,7 +11,6 @@ class ProxyItem(scrapy.Item):
     proxy = scrapy.Field()
     pass
 
-
 # 菜单数据
 class CategoryItem(scrapy.Item):
     # 一级菜单分类
@@ -45,3 +44,10 @@ class Food(scrapy.Item):
     # 评论地址
     comment_url = scrapy.Field()
     pass
+
+# 评论数据
+class Comment(scrapy.Item):
+    # 菜单名称
+    title = scrapy.Field()
+    # 评论内容
+    comment = scrapy.Field()

@@ -2,6 +2,7 @@ import scrapy
 from scrapy import Selector
 from DataGet.items import FoodItem
 import csv
+import random
 
 
 class FooditeamsSpider(scrapy.Spider):
@@ -11,7 +12,7 @@ class FooditeamsSpider(scrapy.Spider):
 
     def start_requests(self):
         # 读取csv文件
-        csvfile = open("category.csv", "r", encoding='utf-8')
+        csvfile = open("D:\PROJECT\Xiachufang_DataAnalysis\DataGet\category.csv", "r", encoding='utf-8')
         reader = csv.reader(csvfile)
         for item in reader:
             # 忽略第一行

@@ -1,5 +1,6 @@
 import scrapy
 from scrapy import Selector
+from DataGet.items import Comment
 import csv
 
 
@@ -10,7 +11,7 @@ class CommentsSpider(scrapy.Spider):
 
     def start_requests(self):
         # 读取csv文件
-        csvfile = open("food.csv", "r", encoding='utf-8')
+        csvfile = open("D:\PROJECT\Xiachufang_DataAnalysis\DataGet/food.csv", "r", encoding='utf-8')
         reader = csv.reader(csvfile)
         for item in reader:
             # 忽略第一行
@@ -36,16 +37,18 @@ class CommentsSpider(scrapy.Spider):
                 )
             # 获取菜品名字
             title = response.xpath('//h1/a/span/text()').get()
-            # print(title)
+            print(title)
             # 爬取评论
             comments = response.xpath('//p[@class="desc"]/text()')
             for item in comments:
                 comments_item = item.get().strip()
-                if comments_item == "  分享图片":
+                if comments_item == "分享图片":
                     pass
-                print("————评论————：",comments_item)
-
-
+                comment = Comment()
+                comment['title'] = title
+                comment['comment'] = comments_item
+                yield comment
+                # print("————评论————：",comments_item)
 
 
     def error_parse(self, faiture):

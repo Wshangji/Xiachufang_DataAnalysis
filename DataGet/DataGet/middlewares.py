@@ -73,22 +73,19 @@ class DatagetDownloaderMiddleware:
         # Called for each request that goes through the downloader
         # middleware.
 
-        # 使用代理池
-        # plist = [
-        #     "http://47.92.113.71:80",
-        #     "http://210.77.87.71:3128",
-        #     "http://47.92.113.71:80",
-        #     "http://183.247.199.111:30001",
-        #     "http://101.34.214.152:8001",
-        #     "http://58.20.234.243:9091",
-        #     "http://202.55.5.209:8090",
-        # ]
-        # request.meta["proxy"] = random.choice(plist)
-        return None
+        """对request对象加上proxy"""
+        proxy = self.get_random_proxy()
+        print("this is request ip:" + proxy)
+        request.meta['proxy'] = proxy
+        # return None
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.
-
+        if response.status != 200:
+            proxy = self.get_random_proxy()
+            print("this is response ip:"+proxy)
+            request.meta['proxy'] = proxy
+            return request
         # Must either;
         # - return a Response object
         # - return a Request object
@@ -107,3 +104,15 @@ class DatagetDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+    def get_random_proxy(self):
+        """随机从文件中读取proxy"""
+        while 1:
+            with open('D:\PROJECT\Xiachufang_DataAnalysis\DataGet\proxy.csv', 'r') as f:
+                proxies = f.readlines()
+            if proxies:
+                break
+            else:
+                time.sleep(1)
+        proxy = random.choice(proxies).strip()
+        return "https://"+proxy
